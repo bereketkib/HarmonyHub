@@ -1,0 +1,62 @@
+<%- include('../partials/header', { title: 'Categories' }) %>
+<main>
+  <!-- Display Flash Error Message -->
+  <% if (errorMessage) { %>
+    <div class="alert alert-danger text-center flash-message"><%= errorMessage %></div>
+  <% } %>
+
+  <!-- Page Introduction Section -->
+  <section class="intro-section text-center my-5">
+    <h1 class="page-title">Categories</h1>
+    <p class="lead-text text-center my-5 py-5">
+      Explore and manage all your categories. Create, update, or delete categories as needed.
+    </p>
+    <div class="text-center">
+      <a href="/categories/create" class="add-category-btn">
+        <i class="bi bi-plus-lg me-1"></i> Add New Category
+      </a>
+    </div>
+  </section>
+  <!-- Categories List Section -->
+  <section class="categories-section">
+    <% if (categories.length > 0) { %>
+      <div class="categories-list">
+        <% categories.forEach((category, index) => { %>
+          <div class="category-card">
+            <h3><%= category.name %></h3>
+            <p><%= category.description %></p>
+            <div class="button-group">
+              <a href="/categories/<%= category.id %>/edit" class="edit-btn"><i class="bi bi-pencil"></i></a>
+              <form action="/categories/<%= category.id %>?_method=DELETE" method="POST" class="d-inline">
+                <button type="submit" class="delete-btn"><i class="bi bi-trash"></i></button>
+              </form>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <p class="text-center no-categories">No categories found. Start by adding a new one!</p>
+    <% } %>
+  </section>
+  <hr>
+
+  <!-- Category Statistics Section (optional) -->
+  <section class="stats-section text-center">
+    <h2>Category Stats</h2>
+    <div class="stats-cards">
+      <div class="stat-card">
+        <h4>Total Categories</h4>
+        <p><%= categories.length %></p>
+      </div>
+      <div class="stat-card">
+        <h4>Categories with Items</h4>
+        <p>0</p> <!-- Replace with dynamic value if applicable -->
+      </div>
+      <div class="stat-card">
+        <h4>Active Categories</h4>
+        <p>0</p> <!-- Replace with dynamic value if applicable -->
+      </div>
+    </div>
+  </section>
+</main>
+<%- include('../partials/footer') %>

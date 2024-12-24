@@ -1,0 +1,29 @@
+<%- include('../partials/header', { title: 'Create Category' }) %>
+<main>
+  <div class="form-container">
+    <h1>Create New Category</h1>
+    <form action="/categories" method="POST">
+      <!-- Category Name -->
+      <div class="form-group">
+        <input type="text" id="name" name="name" placeholder=" " required />
+        <label for="name">Category Name</label>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <textarea
+          id="description"
+          name="description"
+          placeholder=" "
+          required
+        ></textarea>
+        <label for="description">Description</label>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="submit-btn">Create Category</button>
+    </form>
+    <a href="/categories" class="back-link">← Back to Categories</a>
+  </div>
+</main>
+<%- include('../partials/footer') %>

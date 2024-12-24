@@ -1,0 +1,80 @@
+<%- include('../partials/header', { title: 'Items' }) %>
+<main>
+  <!-- Search and Filter Section -->
+  <section class="search-filter-section container my-4">
+    <form action="/items" method="GET" class="search-form">
+      <input
+        type="text"
+        name="search"
+        class="search-input"
+        placeholder="Search by name or description..."
+        value="<%= searchQuery || '' %>"
+      />
+      <select name="category" class="filter-dropdown">
+        <option value="">All Categories</option>
+        <% categories.forEach(category => { %>
+          <option value="<%= category.id %>" <%= selectedCategory == category.id ? 'selected' : '' %>>
+            <%= category.name %>
+          </option>
+        <% }) %>
+      </select>
+      <button type="submit" class="search-btn">
+        <i class="bi bi-search"></i>
+      </button>
+    </form>
+  </section>
+
+  <!-- Page Title -->
+  <section class="intro-section text-center my-5">
+    <h1 class="page-title">Manage Items</h1>
+    <p class="lead-text">
+      Browse, search, and manage your inventory items efficiently.
+    </p>
+    <div>
+      <a href="/items/create" class="btn btn-primary add-item-btn">
+        <i class="bi bi-plus-lg"></i> Add New Item
+      </a>
+    </div>
+  </section>
+
+  <!-- Items List Section -->
+  <section class="items-section container py-5">
+    <% if (items.length > 0) { %>
+      <div class="items-grid">
+        <% items.forEach(item => { %>
+          <div class="item-card">
+            <h3 class="item-name"><%= item.name %></h3>
+            <p class="item-category"> <%= item.category_name %></p>
+            <p class="item-desc"><%= item.description %></p>
+            <p class="item-price"><i class="bi bi-tag"></i> $<%= item.price %></p>
+            <p class="item-quantity"><%= item.quantity %> in stock</p>
+            <div class="button-group">
+              <a href="/items/<%= item.id %>/edit" class="edit-btn">
+                <i class="bi bi-pencil"></i>
+              </a>
+              <form action="/items/<%= item.id %>?_method=DELETE" method="POST" class="d-inline">
+                <button type="submit" class="delete-btn">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+
+      <!-- Pagination -->
+      <nav class="pagination-container">
+        <% for (let i = 1; i <= totalPages; i++) { %>
+          <a 
+            href="/items?page=<%= i %>&search=<%= searchQuery %>&category=<%= selectedCategory %>" 
+            class="pagination-link <%= currentPage === i ? 'active' : '' %>">
+            <%= i %>
+          </a>
+        <% } %>
+      </nav>
+    <% } else { %>
+      <p class="no-items">No items found. Try adjusting your search or filters!</p>
+    <% } %>
+  </section>
+</main>
+<%- include('../partials/footer') %>

@@ -1,0 +1,175 @@
+/* Hero Section */
+.hero-section {
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.animated-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(40, 48, 72, 0.1),
+    rgba(133, 147, 152, 0.6)
+  );
+  animation: gradient-move 8s infinite;
+  z-index: 0;
+}
+
+@keyframes gradient-move {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.hero-section h1,
+.hero-section p {
+  z-index: 1;
+  color: white;
+}
+
+.animate-text {
+  animation: fade-in 1.5s ease-out;
+}
+
+.animate-text-delay {
+  animation: fade-in 2s ease-out;
+}
+
+/* Parallax Section */
+.parallax-bg {
+  background: url("/images/parallax-bg.jpg") no-repeat center center/cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateZ(-1px) scale(2);
+  z-index: 0;
+}
+
+.our-story-section {
+  position: relative;
+  color: white;
+  min-height: 50vh;
+}
+
+/* Contact Form */
+.contact-form-section .glowing-input {
+  border: none;
+  outline: none;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.contact-form-section .glowing-input:focus {
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+}
+
+/* Buttons */
+.glowing-btn {
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 8px;
+  background: linear-gradient(120deg, #0073ff, #0c5574);
+  color: white;
+  transition: box-shadow 0.3s ease;
+}
+
+.glowing-btn:hover {
+  box-shadow: 0 0 20px rgba(255, 127, 95, 0.8);
+}
+
+/* Our Mission Section */
+.our-mission-section {
+    background: linear-gradient(135deg, #2b2b3d, #424257);
+    color: #fff;
+    padding: 6rem 2rem;
+    text-align: center;
+  }
+  
+  .mission-card {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    padding: 2rem;
+    border-radius: 12px;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .mission-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+  
+  .mission-icon {
+    color: #8bc34a;
+    margin-bottom: 1rem;
+    transition: color 0.3s;
+  }
+  
+  .mission-card:hover .mission-icon {
+    color: #689f38;
+  }
+  
+  /* Our Story Section */
+  .our-story-section {
+    background: linear-gradient(135deg, rgba(40, 40, 72, 0.9), rgba(60, 60, 90, 0.9));
+    padding: 6rem 2rem;
+    position: relative;
+  }
+  
+  .parallax-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/images/parallax.jpg') no-repeat center center/cover;
+    opacity: 0.6;
+    z-index: 0;
+  }
+  
+  .story-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .story-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  }
+  
+  .story-img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+  
+  @media (min-width: 768px) {
+    .our-mission-section,
+    .our-story-section {
+      padding: 7rem 4rem;
+    }
+  }
+  

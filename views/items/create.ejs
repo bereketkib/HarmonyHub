@@ -1,0 +1,47 @@
+<%- include('../partials/header', { title: 'Create Item' }) %>
+<main>
+  <div class="form-container">
+    <h1>Create New Item</h1>
+    <form action="/items" method="POST">
+      <!-- Item Name -->
+      <div class="form-group">
+        <input type="text" id="name" name="name" placeholder=" " required />
+        <label for="name">Item Name</label>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <textarea id="description" name="description" placeholder=" " required></textarea>
+        <label for="description">Description</label>
+      </div>
+
+      <!-- Price -->
+      <div class="form-group">
+        <input type="number" id="price" name="price" step="0.01" placeholder=" " required />
+        <label for="price">Price</label>
+      </div>
+
+      <!-- Quantity -->
+      <div class="form-group">
+        <input type="number" id="quantity" name="quantity" placeholder=" " required />
+        <label for="quantity">Quantity</label>
+      </div>
+
+      <!-- Category -->
+      <div class="form-group">
+        <select id="category" name="category_id" required>
+          <option value="" disabled selected>Select a Category</option>
+          <% categories.forEach(category => { %>
+            <option value="<%= category.id %>"><%= category.name %></option>
+          <% }); %>
+        </select>
+        <label for="category">Category</label>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="submit-btn">Create Item</button>
+    </form>
+    <a href="/items" class="back-link">← Back to Items</a>
+  </div>
+</main>
+<%- include('../partials/footer') %>

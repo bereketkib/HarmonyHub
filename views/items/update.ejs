@@ -1,0 +1,85 @@
+<%- include('../partials/header', { title: 'Update Item' }) %>
+
+<main class="container my-5">
+  <section class="form-container">
+    <h1 class="form-title text-center">Update Item</h1>
+    <form
+      action="/items/<%= item.id %>?_method=PUT"
+      method="POST"
+    >
+      <!-- Item Name -->
+      <div class="form-group">
+        <input
+          type="text"
+          id="name"
+          name="name"
+          value="<%= item.name %>"
+          required
+        />
+        <label for="name">Item Name</label>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <textarea
+          id="description"
+          name="description"
+          rows="4"
+          required
+        ><%= item.description %></textarea>
+        <label for="description">Description</label>
+      </div>
+
+      <!-- Price -->
+      <div class="form-group">
+        <input
+          type="number"
+          id="price"
+          name="price"
+          value="<%= item.price %>"
+          step="0.01"
+          required
+        />
+        <label for="price">Price ($)</label>
+      </div>
+
+      <!-- Quantity -->
+      <div class="form-group">
+        <input
+          type="number"
+          id="quantity"
+          name="quantity"
+          value="<%= item.quantity %>"
+          required
+        />
+        <label for="quantity">Quantity</label>
+      </div>
+
+      <!-- Category -->
+      <div class="form-group">
+        <select id="category" name="category_id" required>
+          <% categories.forEach(category => { %>
+            <option
+              value="<%= category.id %>"
+              <%= category.id === item.category_id ? 'selected' : '' %>
+            >
+              <%= category.name %>
+            </option>
+          <% }); %>
+        </select>
+        <label for="category">Category</label>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary btn-lg">
+          Update Item
+        </button>
+      </div>
+    </form>
+    <!-- Back to Items -->
+    <a href="/items" class="back-link">← Back to Items</a>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

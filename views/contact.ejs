@@ -1,0 +1,42 @@
+<%- include('partials/header') %>
+<main>
+  <!-- Hero Section -->
+  <section class="hero-section text-center position-relative">
+    <div class="animated-bg"></div>
+    <div class="container py-5 position-relative z-index-1">
+      <h1 class="display-3 fw-bold animate-text">Contact Us</h1>
+      <p class="lead mb-4 animate-text-delay">Have questions? We'd love to hear from you!</p>
+    </div>
+  </section>
+
+  <!-- Contact Form Section -->
+  <section class="contact-form-section py-5">
+    <div class="container">
+      <h2 class="fw-bold text-center animate-fade-up">Get in Touch</h2>
+      <form class="form-container animate-slide-in">
+        <div class="mb-3">
+          <input type="text" class="form-control glowing-input" id="name" placeholder="Your Name">
+        </div>
+        <div class="mb-3">
+          <input type="email" class="form-control glowing-input" id="email" placeholder="Your Email">
+        </div>
+        <div class="mb-3">
+          <textarea class="form-control glowing-input" id="message" rows="4" placeholder="Your Message"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary glowing-btn">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Social Media Section -->
+  <section class="social-media-section py-5 text-center">
+    <h2 class="fw-bold text-white animate-fade-up">Follow Us</h2>
+    <div class="social-icons animate-slide-up">
+      <a href="#" class="social-link"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="social-link"><i class="bi bi-twitter"></i></a>
+      <a href="#" class="social-link"><i class="bi bi-instagram"></i></a>
+      <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
+    </div>
+  </section>
+</main>
+<%- include('partials/footer') %>
