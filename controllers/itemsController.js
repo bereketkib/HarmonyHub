@@ -1,4 +1,4 @@
-const supabase = require("../utilities/supabaseclient");
+const supabase = require('../utilities/supabaseClient')
 
 exports.listItems = async (req, res) => {
   try {
