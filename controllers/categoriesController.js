@@ -7,7 +7,10 @@ exports.renderCategoryList = async (req, res) => {
     const result = await pool.query("SELECT * FROM categories ORDER BY id");
     res.render("categories/list", { categories: result.rows });
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).render("error", {
+      errorMessage: "An error occured while fetching categories",
+      title: "Error",
+    });
   }
 };
 
@@ -29,8 +32,10 @@ exports.createCategory = async (req, res) => {
 
     res.redirect("/categories");
   } catch (error) {
-    console.error("Error Creating category:", error);
-    res.status(500).send("An error occurred while creating the category.");
+    res.status(500).render("error", {
+      errorMessage: "An error occurred while creating the category",
+      title: "Error",
+    });
   }
 };
 
@@ -48,8 +53,10 @@ exports.renderUpdateForm = async (req, res) => {
     if (error) throw error;
     res.render("categories/update", { category });
   } catch (error) {
-    console.error("Error fetching category", error.message);
-    res.status(500).send("Error fetching category");
+    res.status(500).render("error", {
+      errorMessage: "Error fetching category",
+      title: "Error",
+    });
   }
 };
 
@@ -68,7 +75,10 @@ exports.updateCategory = async (req, res) => {
 
     res.redirect("/categories");
   } catch (error) {
-    res.status(500).send("Error updating category.");
+    res.status(500).render("error", {
+      errorMessage: "Error updating category",
+      title: "Error",
+    });
   }
 };
 
@@ -89,7 +99,10 @@ exports.deleteCategory = async (req, res) => {
 
     if (items.length > 0) {
       // If there are associated items, set flash message
-      req.flash("errorMessage", "Cannot delete category: It has associated items.");
+      req.flash(
+        "errorMessage",
+        "Cannot delete category: It has associated items."
+      );
       return res.redirect("/categories");
     }
 
@@ -105,10 +118,10 @@ exports.deleteCategory = async (req, res) => {
 
     res.redirect("/categories");
   } catch (error) {
-    console.error("Error deleting category:", error.message);
     req.flash("errorMessage", "An unexpected error occurred.");
-    res.redirect("/categories");
+    res.status(500).render("error", {
+      errorMessage: "Error deleting category",
+      title: "Error",
+    });
   }
 };
-
-

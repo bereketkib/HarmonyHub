@@ -1,4 +1,4 @@
-const supabase = require('../utilities/supabaseClient')
+const supabase = require("../utilities/supabaseClient");
 
 exports.listItems = async (req, res) => {
   try {
@@ -16,7 +16,9 @@ exports.listItems = async (req, res) => {
     // Count total items for pagination
     let countQuery = supabase.from("items").select("id", { count: "exact" });
     if (search) {
-      countQuery = countQuery.ilike("name", `%${search}%`).or(`description.ilike.%${search}%`);
+      countQuery = countQuery
+        .ilike("name", `%${search}%`)
+        .or(`description.ilike.%${search}%`);
     }
     if (category) {
       countQuery = countQuery.eq("category_id", category);
@@ -37,7 +39,9 @@ exports.listItems = async (req, res) => {
       .range(offset, offset + limit - 1);
 
     if (search) {
-      query = query.ilike("name", `%${search}%`).or(`description.ilike.%${search}%`);
+      query = query
+        .ilike("name", `%${search}%`)
+        .or(`description.ilike.%${search}%`);
     }
     if (category) {
       query = query.eq("category_id", category);
@@ -65,11 +69,12 @@ exports.listItems = async (req, res) => {
     });
   } catch (error) {
     console.error("Error fetching items:", error.message);
-    res.status(500).send("An error occurred while fetching items.");
+    res.status(500).render("error", {
+      errorMessage: "An error occurred while fetching items",
+      title: "Error",
+    });
   }
 };
-
-
 
 // Render the create item form
 exports.renderCreateForm = async (req, res) => {
@@ -83,7 +88,10 @@ exports.renderCreateForm = async (req, res) => {
     res.render("items/create", { categories });
   } catch (error) {
     console.error("Error fetching categories:", error.message);
-    res.status(500).send("An error occured while rendering the form.");
+    res.status(500).render("error", {
+      errorMessage: "An error occured while rendering the form",
+      title: "Error",
+    });
   }
 };
 
@@ -107,7 +115,10 @@ exports.createItem = async (req, res) => {
     res.redirect("/items"); // Redirect to the item list
   } catch (error) {
     console.error("Error creating item:", error.message);
-    res.status(500).send("An error occurred while creating the item.");
+    res.status(500).render("error", {
+      errorMessage: "An error occurred while creating the item",
+      title: "Error",
+    });
   }
 };
 
@@ -135,7 +146,10 @@ exports.renderUpdateForm = async (req, res) => {
     res.render("items/update", { item, categories });
   } catch (error) {
     console.error("Error rendering update form:", error.message);
-    res.status(500).send("An error occurred while rendering the update form.");
+    res.status(500).render("error", {
+      errorMessage: "An error occurred while rendering the update form",
+      title: "Error",
+    });
   }
 };
 
@@ -162,7 +176,10 @@ exports.updateItem = async (req, res) => {
     res.redirect("/items");
   } catch (error) {
     console.error("Error updating item:", error.message);
-    res.status(500).send("An error occurred while updating the item.");
+    res.status(500).render("error", {
+      errorMessage: "An error occurred while updating the item",
+      title: "Error",
+    });
   }
 };
 
@@ -182,6 +199,9 @@ exports.deleteItem = async (req, res) => {
     res.redirect("/items");
   } catch (error) {
     console.error("Error deleting item:", error.message);
-    res.status(500).send("An error occurred while deleting the item.");
+    res.status(500).render("error", {
+      errorMessage: "An error occurred while deleting the item",
+      title: "Error",
+    });
   }
 };

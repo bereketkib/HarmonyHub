@@ -52,6 +52,13 @@ app.get("/contact", (req, res) => {
   res.render("contact", { title: "Contact Us" });
 });
 
+app.use((err, req, res, next) => {
+  res.status(500).render("error", {
+    errorMessage: "Something went wrong. Please try again later.",
+    title: "Error",
+  });
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
