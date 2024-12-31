@@ -1,3 +1,4 @@
+require("dotenv").config();
 const pool = require("../models/db");
 const supabase = require("../utilities/supabaseClient");
 
@@ -82,10 +83,19 @@ exports.updateCategory = async (req, res) => {
   }
 };
 
+const CORRECT_PASSCODE = process.env.DELETE_PASSCODE;
+
 // Delete a category
 exports.deleteCategory = async (req, res) => {
   try {
     const { id } = req.params;
+    const { passcode } = req.body;
+
+    // Verify the passcode
+    if (passcode !== CORRECT_PASSCODE) {
+      req.flash("errorMessage", "Invalid passcode. Cannot delete category.");
+      return res.redirect("/categories");
+    }
 
     // Check if the category has associated items
     const { data: items, error: checkError } = await supabase
@@ -98,7 +108,6 @@ exports.deleteCategory = async (req, res) => {
     }
 
     if (items.length > 0) {
-      // If there are associated items, set flash message
       req.flash(
         "errorMessage",
         "Cannot delete category: It has associated items."
@@ -106,7 +115,7 @@ exports.deleteCategory = async (req, res) => {
       return res.redirect("/categories");
     }
 
-    // Proceed with deletion if no associated items
+    // Proceed with deletion
     const { error: deleteError } = await supabase
       .from("categories")
       .delete()
@@ -125,3 +134,4 @@ exports.deleteCategory = async (req, res) => {
     });
   }
 };
+

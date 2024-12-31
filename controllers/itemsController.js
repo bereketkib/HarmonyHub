@@ -1,3 +1,4 @@
+require("dotenv").config();
 const supabase = require("../utilities/supabaseClient");
 
 exports.listItems = async (req, res) => {
@@ -183,11 +184,20 @@ exports.updateItem = async (req, res) => {
   }
 };
 
+const CORRECT_PASSCODE = process.env.DELETE_PASSCODE;
+
 exports.deleteItem = async (req, res) => {
   const { id } = req.params;
+  const { passcode } = req.body;
 
   try {
-    // Delete the item by ID
+    // Verify the passcode
+    if (passcode !== CORRECT_PASSCODE) {
+      req.flash("errorMessage", "Invalid passcode. Cannot delete item.");
+      return res.redirect("/items");
+    }
+
+    // Proceed with deletion
     const { error: deleteError } = await supabase
       .from("items")
       .delete()
@@ -205,3 +215,4 @@ exports.deleteItem = async (req, res) => {
     });
   }
 };
+

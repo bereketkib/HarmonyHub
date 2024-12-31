@@ -40,33 +40,83 @@ window.onscroll = function () {
 
 document.addEventListener("DOMContentLoaded", () => {
   const deleteButtons = document.querySelectorAll(".delete-btn");
-  const confirmDialog = document.getElementById("confirm-dialog");
-  const cancelBtn = document.getElementById("cancel-btn");
-  const confirmBtn = document.getElementById("confirm-btn");
+  const confirmDialog = document.getElementById("delete-confirm-dialog");
+  const cancelBtn = document.getElementById("delete-cancel-btn");
+  const confirmBtn = document.getElementById("delete-confirm-btn");
+  const passcodeInput = document.getElementById("delete-passcode-input");
 
-  let formToSubmit = null; // To store the form reference temporarily
+  let formToSubmit = null;
 
   deleteButtons.forEach((button) => {
     button.addEventListener("click", (event) => {
-      event.preventDefault(); // Prevent immediate form submission
-      formToSubmit = button.closest("form"); // Get the form to submit later
+      event.preventDefault(); // Prevent the form from submitting immediately
+      formToSubmit = button.closest("form"); // Find the form closest to the delete button
       confirmDialog.style.display = "flex"; // Show the confirmation dialog
     });
   });
 
-  // Cancel button hides the dialog
   cancelBtn.addEventListener("click", () => {
-    confirmDialog.style.display = "none";
-    formToSubmit = null; // Reset the form reference
+    confirmDialog.style.display = "none"; // Hide the dialog if the user clicks Cancel
+    formToSubmit = null; // Reset the form to submit
+    passcodeInput.value = ""; // Clear the passcode input
   });
 
-  // Confirm button submits the form
   confirmBtn.addEventListener("click", () => {
-    if (formToSubmit) {
-      formToSubmit.submit(); // Submit the stored form
+    const passcode = passcodeInput.value.trim();
+    if (formToSubmit && passcode) {
+      // Append the passcode as a hidden input field to the form
+      const passcodeField = document.createElement("input");
+      passcodeField.type = "hidden";
+      passcodeField.name = "passcode";
+      passcodeField.value = passcode;
+      formToSubmit.appendChild(passcodeField);
+
+      formToSubmit.submit(); // Submit the form after the passcode is entered
+    } else {
+      alert("Please enter the passcode.");
     }
   });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  // --- EDIT BUTTON HANDLER ---
+  const editButtons = document.querySelectorAll(".edit-btn");
+  const editConfirmDialog = document.getElementById("edit-confirm-dialog");
+  const editCancelBtn = document.getElementById("edit-cancel-btn");
+  const editConfirmBtn = document.getElementById("edit-confirm-btn");
+  const editPasscodeInput = document.getElementById("edit-passcode-input");
+
+  let editUrl = null;
+
+  editButtons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      editUrl = button.href; // Store the edit URL from the button
+      editConfirmDialog.style.display = "flex"; // Show the edit confirmation dialog
+    });
+  });
+
+  editCancelBtn.addEventListener("click", () => {
+    editConfirmDialog.style.display = "none"; // Hide the dialog
+    editUrl = null; // Reset the URL
+    editPasscodeInput.value = ""; // Clear the passcode input
+  });
+
+  editConfirmBtn.addEventListener("click", () => {
+    const passcode = editPasscodeInput.value.trim();
+    if (editUrl && passcode) {
+      // Replace with your passcode validation logic (e.g., compare passcode here)
+      if (passcode === "KI890pol") { // Example validation, replace with your actual logic
+        editConfirmDialog.style.display = "none";
+        window.location.href = editUrl; // Redirect to the edit page
+      } else {
+        alert("Invalid passcode. Please try again.");
+      }
+    } else {
+      alert("Please enter the passcode.");
+    }
+  });
+})
 
 document.addEventListener('DOMContentLoaded', () => {
   const toggleItems = (category) => {
