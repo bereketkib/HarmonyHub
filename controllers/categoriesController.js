@@ -5,15 +5,36 @@ const supabase = require("../utilities/supabaseClient");
 // Get all categories
 exports.renderCategoryList = async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM categories ORDER BY id");
-    res.render("categories/list", { categories: result.rows });
+    // Fetch all categories
+    const categoriesResult = await pool.query("SELECT * FROM categories ORDER BY id");
+
+    // Fetch count of categories with items
+    const categoriesWithItemsResult = await pool.query(
+      `SELECT COUNT(DISTINCT category_id) AS count 
+       FROM items`
+    );
+
+    // Fetch count of active categories
+    const activeCategoriesResult = await pool.query(
+      `SELECT COUNT(*) AS count 
+       FROM categories 
+       WHERE id IN (SELECT DISTINCT category_id FROM items)`
+    );
+
+    // Pass data to the view
+    res.render("categories/list", {
+      categories: categoriesResult.rows,
+      categoriesWithItems: categoriesWithItemsResult.rows[0].count,
+      activeCategories: activeCategoriesResult.rows[0].count,
+    });
   } catch (err) {
     res.status(500).render("error", {
-      errorMessage: "An error occured while fetching categories",
+      errorMessage: "An error occurred while fetching categories",
       title: "Error",
     });
   }
 };
+
 
 // Render the Create Category Form
 exports.renderCreateForm = (req, res) => {
